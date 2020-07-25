@@ -12,7 +12,7 @@ const Button:React.FC<Props> = ({children,color,disabled}) => {
                 'button-green': color === 'green',
                 'button-gray': color === 'gray',
                 'button-red': color === 'red',
-                // 'button-blue': color === 'blue',
+                'button-blue': color === 'blue',
                 'button-disabled' : disabled
             })}>
                 {children}

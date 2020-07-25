@@ -1,3 +1,13 @@
 .login-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  min-height: 300px;
+  margin: 50px auto;
+  padding: 35px 20px;
+  border: 1px solid black;
 
+  h2 {
+    text-align: center;
+  }
 }
