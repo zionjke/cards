@@ -8,7 +8,7 @@ type LoginResponseType = {
     email:string
     name:string
     isAdmin:boolean
-    rememberMy:boolean
+    rememberMe:boolean
     token:string
     tokenDeathTime:number
     __v:number
@@ -18,7 +18,7 @@ type LoginResponseType = {
 
 export const api = {
     login(email:string,password:string,rememberMe:boolean) {
-        instanse.post<LoginResponseType>('auth/login',{email,password,rememberMe})
+       return  instanse.post<LoginResponseType>('auth/login', {email, password, rememberMe},)
     }
 }
 

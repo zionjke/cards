@@ -6,7 +6,7 @@ type Props = {
 };
 const Field: React.FC<Props> = ({type, placeholder}) => {
     return (
-        <input className='field' placeholder={placeholder} type={type}/>
+        <input className='field'  placeholder={placeholder} type={type}/>
     );
 };
 
