@@ -6,7 +6,7 @@ const InitialState:InitialStateType = {
 
 };
 
-const registrationReducer = (state:InitialStateType,action:any) => {
+const registrationReducer = (state:InitialStateType=InitialState,action:any) => {
     return state
 };
 
