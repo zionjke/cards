@@ -9,7 +9,7 @@ const Profile = (props: Props) => {
     return (
         <div>
             <Field placeholder='Введите имя' type='text'/>
-            <Button color={'blue'} disabled>Кнопка</Button>
+            <Button >Кнопка</Button>
         </div>
     );
 };
