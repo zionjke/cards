@@ -6,7 +6,7 @@ const InitialState:InitialStateType = {
 
 };
 
-const profileReducer = (state:InitialStateType,action:any) => {
+const profileReducer = (state: InitialStateType = InitialState,action:any) => {
     return state
 };
 

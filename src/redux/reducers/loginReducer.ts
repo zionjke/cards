@@ -1,12 +1,8 @@
-type InitialStateType = {
+type InitialStateType = {}
 
-}
+const initialState: InitialStateType = {};
 
-const initialState:InitialStateType = {
-
-};
-
-const loginReducer = (state:InitialStateType,action:any):InitialStateType => {
+const loginReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
     return state
 };
 

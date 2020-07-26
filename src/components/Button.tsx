@@ -5,15 +5,18 @@ type Props = {
     children?: string
     color?:  string
     disabled? : boolean
+    onClickFunc?: any
 };
-const Button:React.FC<Props> = ({children,color,disabled}) => {
+const Button:React.FC<Props> = ({children,color,disabled,onClickFunc}) => {
     return (
-            <button className={classNames('button',{
+            <button onClick={onClickFunc}
+
+                className={classNames('button',{
                 'button-green': color === 'green',
                 'button-gray': color === 'gray',
                 'button-red': color === 'red',
-                // 'button-blue': color === 'blue',
-                'button-disabled' : disabled
+                'button-blue': color === 'blue',
+                'button-disabled' : disabled === true
             })}>
                 {children}
             </button>

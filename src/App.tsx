@@ -1,6 +1,5 @@
 import React from 'react';
 import './scss/App.scss';
-
 import Header from "./components/Header";
 import Profile from "./pages/Profile";
 import { Route } from 'react-router-dom';
