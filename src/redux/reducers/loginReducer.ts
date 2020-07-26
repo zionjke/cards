@@ -4,17 +4,19 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {api} from "../../dal/api";
 
 
-type InitialStateType = {
-    isAuth:boolean
-    email: string
-    name: string
-    isAdmin: boolean
-    rememberMe: boolean
-    isLoading: boolean
-    errorMessage: string
-}
+// type InitialStateType = {
+//     isAuth:boolean
+//     email: string
+//     name: string
+//     isAdmin: boolean
+//     rememberMe: boolean
+//     isLoading: boolean
+//     errorMessage: string
+// }
 
-const initialState: InitialStateType = {
+type InitialStateType = typeof InitialState
+
+const InitialState = {
     isLoading: false,
     isAuth:false,
     email: '',
@@ -24,7 +26,7 @@ const initialState: InitialStateType = {
     errorMessage: ''
 };
 
-const loginReducer = (state: InitialStateType = initialState, action: LoginActionTypes): InitialStateType => {
+const loginReducer = (state: InitialStateType = InitialState, action: LoginActionTypes): InitialStateType => {
     switch (action.type) {
         case "LOGIN/REDUCER/SET_USER_DATA":
             return {

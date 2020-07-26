@@ -25,7 +25,6 @@ export const Registration = (props: PropsType) => {
         const [passwordConfirm, setPasswordConfirm] = useState('')
 
         const onChangeLogin = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-            debugger
             setEmail(e.currentTarget.value)
         }, [email])
 
