@@ -4,10 +4,10 @@ import Field from "../components/Field";
 import Button from "../components/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../redux/reducers/loginReducer";
-import {ChangeEvent, useState} from 'react';
+import {ChangeEvent, useCallback, useState} from 'react';
 import {AppStateType} from "../redux/store";
-import { useHistory } from 'react-router-dom';
-import Loader from "../components/Loader";
+import { useHistory, Redirect } from 'react-router-dom';
+
 
 
 
@@ -22,7 +22,7 @@ type Props = {
      const dispatch = useDispatch()
      const history = useHistory()
      // @ts-ignore
-     let {isLoading,isAuth} = useSelector<AppStateType>((state) => {
+     const {isLoading,isAuth} = useSelector<AppStateType>((state) => {
          return {
              isLoading: state.login.isLoading,
              isAuth:state.login.isAuth
@@ -30,22 +30,25 @@ type Props = {
      })
 
 
-     const onEmailChange = (e:ChangeEvent<HTMLInputElement>) => {
+     const onEmailChange = useCallback((e:ChangeEvent<HTMLInputElement>) => {
          setEmail(e.currentTarget.value)
-     }
+     },[])
 
-     const onPasswordChange = (e:ChangeEvent<HTMLInputElement>) => {
+     const onPasswordChange = useCallback((e:ChangeEvent<HTMLInputElement>) => {
          setPassword(e.currentTarget.value)
-     }
+     },[])
 
-     const onRememberMeChange = (e:ChangeEvent<HTMLInputElement>) => {
+     const onRememberMeChange = useCallback((e:ChangeEvent<HTMLInputElement>) => {
          setRememberMe(e.currentTarget.checked)
-     }
+     },[])
 
 
      const onClickLogin = () => {
          dispatch(login(email,password,rememberMe))
-         if(isAuth) history.push('/profile')
+         isAuth && history.push('/profile')
+         if(isAuth) {
+             return <Redirect to='/profile'/>
+         }
      }
 
      return (
@@ -56,9 +59,8 @@ type Props = {
              <Field type='password' onChange={onPasswordChange} placeholder='Password'/>
              <Field type='checkbox' onChange={onRememberMeChange} />
              <Button onClick={onClickLogin} color='blue' isLoading={isLoading} >
-                 LOG IN
+                 {isLoading ? 'LOADING...' : ' LOG IN'}
              </Button>
-             {isLoading && <Loader/>}
          </div>
      );
  });

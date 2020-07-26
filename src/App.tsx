@@ -10,9 +10,11 @@ const App = () => {
   return (
     <div className="App">
         <Header/>
-        <Route exact path={'/profile'} render={() => <Profile/>}/>
-        <Route exact path={'/login'} render={() => <Login/>}/>
-        <Route exact path={'/registration'} render={() => <Registration/>}/>
+        <div className='wrapper'>
+            <Route exact path={'/profile'} render={() => <Profile/>}/>
+            <Route exact path={'/login'} render={() => <Login/>}/>
+            <Route exact path={'/registration'} render={() => <Registration/>}/>
+        </div>
     </div>
   );
 };
