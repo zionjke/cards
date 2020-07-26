@@ -63,7 +63,7 @@ export const Registration = React.memo((props: PropsType) => {
                     ? <div className='error_password'>Password mismatch</div>
                     : ''
                 }
-                <Button disabled={disabled} onClickFunc={onClickSubmit} color={'green'}>Confirm</Button>
+                <Button disabled={disabled} onClick={onClickSubmit} color={'green'}>Confirm</Button>
             </div>
         );
     }

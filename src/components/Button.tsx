@@ -4,12 +4,12 @@ import classNames from 'classnames'
 type Props = {
     children?: string
     color?:  string
-    disabled? : boolean
-    onClickFunc?: any
+    disabled? : boolean,
+    onClick: any
 };
-const Button:React.FC<Props> = ({children,color,disabled,onClickFunc}) => {
+const Button:React.FC<Props> = ({children,color,disabled,onClick}) => {
     return (
-            <button onClick={onClickFunc}
+            <button onClick={onClick}
 
                 className={classNames('button',{
                 'button-green': color === 'green',
