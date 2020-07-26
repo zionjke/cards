@@ -6,7 +6,7 @@ type Props = {
     color?:  string
     disabled? : boolean,
     onClick?: any
-    isLoading?: any
+    isLoading?: boolean
 };
 const Button:React.FC<Props> = ({children,color,disabled,onClick,isLoading}) => {
     return (

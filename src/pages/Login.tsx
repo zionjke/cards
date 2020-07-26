@@ -9,26 +9,16 @@ import {AppStateType} from "../redux/store";
 import { useHistory, Redirect } from 'react-router-dom';
 
 
-
-
 type Props = {
 
 };
  const Login = React.memo((props: Props) => {
-
      const [email, setEmail] = useState('');
      const [password, setPassword] = useState('');
      const [rememberMe, setRememberMe] = useState(false);
      const dispatch = useDispatch()
-     const history = useHistory()
-     // @ts-ignore
-     const {isLoading,isAuth} = useSelector<AppStateType>((state) => {
-         return {
-             isLoading: state.login.isLoading,
-             isAuth:state.login.isAuth
-         }
-     })
 
+     const {isLoading,isAuth} = useSelector((state: AppStateType) => state.login)
 
      const onEmailChange = useCallback((e:ChangeEvent<HTMLInputElement>) => {
          setEmail(e.currentTarget.value)
@@ -45,16 +35,15 @@ type Props = {
 
      const onClickLogin = () => {
          dispatch(login(email,password,rememberMe))
-         isAuth && history.push('/profile')
-         if(isAuth) {
-             return <Redirect to='/profile'/>
-         }
+     }
+
+     if(isAuth) {
+         return <Redirect to='/profile'/>
      }
 
      return (
          <div className='login-form'>
              <h2>Log in</h2>
-
              <Field type='text' onChange={onEmailChange} placeholder='Email address'/>
              <Field type='password' onChange={onPasswordChange} placeholder='Password'/>
              <Field type='checkbox' onChange={onRememberMeChange} />

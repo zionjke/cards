@@ -48,7 +48,6 @@ export const newRegistration = (email: string, password: string) => async (dispa
     try {
         let res = await apiRegistration.postRegistration(email, password)
         console.log(res)
-        debugger
         dispatch(actions.requestSuccess(res.success))
     } catch (e) {
         console.log(e)
