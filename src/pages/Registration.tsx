@@ -7,43 +7,44 @@ import Button from "../components/Button";
 import {actions, newRegistration} from "../redux/reducers/registrationReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../redux/store";
+import { Redirect } from 'react-router-dom';
 
 
 type PropsType = {};
 
-export const Registration = React.memo((props: PropsType) => {
+export const Registration = (props: PropsType) => {
 
         const state = useSelector((state: AppStateType) => {
             return {
-                valueEmail: state.registration.valueEmail,
-                valuePassword: state.registration.valuePassword,
-                valuePasswordConfirm: state.registration.valuePasswordConfirm,
                 reqSuccess: state.registration.reqSuccess
             }
         })
-
         const dispatch = useDispatch();
-        const [email, setEmail] = useState(state.valueEmail)
-        const [password, setPassword] = useState(state.valuePassword)
-        const [passwordConfirm, setPasswordConfirm] = useState(state.valuePassword)
-
+        const [email, setEmail] = useState('')
+        const [password, setPassword] = useState('')
+        const [passwordConfirm, setPasswordConfirm] = useState('')
 
         const onChangeLogin = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+            debugger
             setEmail(e.currentTarget.value)
-        }, [])
+        }, [email])
 
-        const onChangePassword = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        const onChangePassword = useCallback( (e: ChangeEvent<HTMLInputElement>) => {
             setPassword(e.currentTarget.value)
-        }, [])
+        }, [password])
 
         const onChangePasswordConfirm = useCallback((e: ChangeEvent<HTMLInputElement>) => {
             setPasswordConfirm(e.currentTarget.value)
-        }, [])
+        }, [passwordConfirm])
 
-        const onClickSubmit = useCallback(() => {
-            dispatch(newRegistration(email, password))
+        const onClickSubmit = () => {
             dispatch(actions.setValueForm(email, password, passwordConfirm))
-        }, [])
+            dispatch(newRegistration(email, password))
+        }
+
+        if(state.reqSuccess) {
+        return <Redirect to='/profile'/>
+        }
 
         let error = password.length < 8 ? true : false;
         let Error = password !== passwordConfirm ? true : false
@@ -67,4 +68,4 @@ export const Registration = React.memo((props: PropsType) => {
             </div>
         );
     }
-)
+
