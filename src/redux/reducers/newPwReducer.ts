@@ -6,7 +6,7 @@ const InitialState:InitialStateType = {
 
 };
 
-const newPwReducer = (state:InitialStateType=InitialState,action:any) => {
+const newPwReducer = (state: InitialStateType = InitialState,action:any) => {
     return state
 };
 
