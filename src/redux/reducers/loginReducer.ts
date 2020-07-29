@@ -1,30 +1,29 @@
 import {action, LoginActionTypes} from "../actions/login";
 import {AppStateType} from "../store";
-import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {ThunkAction} from "redux-thunk";
 import {api} from "../../dal/api";
+import Cookies from 'js-cookie'
+import {Dispatch} from "redux";
 
-
-// type InitialStateType = {
-//     isAuth:boolean
-//     email: string
-//     name: string
-//     isAdmin: boolean
-//     rememberMe: boolean
-//     isLoading: boolean
-//     errorMessage: string
-// }
+export const statuses = {
+    INIT: 'INIT',
+    ERROR: 'ERROR',
+    INPROGRESS: 'INPROGRESS',
+    SUCCESS: 'SUCCESS'
+};
 
 type InitialStateType = typeof InitialState
 
 const InitialState = {
-    isLoading: false,
     isAuth:false,
     email: '',
     name: '',
     isAdmin: false,
-    rememberMe: false,
-    errorMessage: ''
+    errorMessage: '',
+    status:statuses.INIT
 };
+
+
 
 const loginReducer = (state: InitialStateType = InitialState, action: LoginActionTypes): InitialStateType => {
     switch (action.type) {
@@ -38,10 +37,15 @@ const loginReducer = (state: InitialStateType = InitialState, action: LoginActio
                 ...state,
                 errorMessage: action.error
             }
-        case "LOGIN/REDUCER/SET_IS_LOADING":
+        case "LOGIN/REDUCER/SET_STATUS":
             return {
                 ...state,
-                isLoading: action.loading
+                status: action.status
+            }
+        case "LOGIN/REDUCER/SET_AUTH":
+            return {
+                ...state,
+                isAuth: action.auth
             }
     }
     return state
@@ -49,24 +53,37 @@ const loginReducer = (state: InitialStateType = InitialState, action: LoginActio
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, LoginActionTypes>
 
-export const login = (email: string, password: string, rememberMe: boolean): ThunkType => (dispatch: ThunkDispatch<AppStateType, unknown, LoginActionTypes>) => {
-    dispatch(action.setLoading(true))
+export const login = (email: string, password: string, rememberMe: boolean): ThunkType => (dispatch: Dispatch<LoginActionTypes>) => {
+    dispatch(action.setStatus(statuses.INPROGRESS))
     api.login(email, password, rememberMe)
-
         .then(r => {
-            let {email, name, isAdmin, rememberMe, token} = r.data
-            dispatch(action.setUserData(email, name, isAdmin, rememberMe,true))
-            localStorage.setItem('token', token)
-            dispatch(action.setLoading(false))
+            Cookies.set('token',r.data.token)
+            const token = Cookies.get('token')
+            // @ts-ignore
+            dispatch(authMe(token))
+            dispatch(action.setStatus(statuses.SUCCESS))
         })
-
         .catch(e => {
-            dispatch(action.setErrorMessage(e))
+            dispatch(action.setStatus(statuses.ERROR))
+            dispatch(action.setErrorMessage(e.response.data.error))
         })
 
-        .finally(()=> {
-            dispatch(action.setLoading(false))
-        })
 }
+
+export const authMe = (token:string):ThunkType => (dispatch:Dispatch<LoginActionTypes>) => {
+    api.me(token).then((r) => {
+        let {email, name, isAdmin,  token} = r.data
+        Cookies.set('token',token)
+        dispatch(action.setUserData(email, name, isAdmin))
+        dispatch(action.setIsAuth(true))
+    })
+}
+
+export const logOut = ():ThunkType => (dispatch:Dispatch<LoginActionTypes>) => {
+    Cookies.remove('token')
+    dispatch(action.setIsAuth(false))
+}
+
+
 
 export default loginReducer

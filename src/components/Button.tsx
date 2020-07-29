@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames'
+import {statuses} from "../redux/reducers/loginReducer";
 
 type Props = {
     children?: string
@@ -7,8 +8,9 @@ type Props = {
     disabled? : boolean,
     onClick?: any
     isLoading?: boolean
+    status?:string
 };
-const Button:React.FC<Props> = ({children,color,disabled,onClick,isLoading}) => {
+const Button:React.FC<Props> = ({children,color,disabled,onClick,status}) => {
     return (
             <button onClick={onClick}
                 className={classNames('button',{
@@ -16,7 +18,7 @@ const Button:React.FC<Props> = ({children,color,disabled,onClick,isLoading}) => 
                 'button-gray': color === 'gray',
                 'button-red': color === 'red',
                 'button-blue': color === 'blue',
-                'button-disabled' : disabled || isLoading
+                'button-disabled' : disabled || status === statuses.INPROGRESS
             })}>
                 {children}
             </button>
