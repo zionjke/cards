@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const instanse = axios.create({
     baseURL: 'http://localhost:7542/1.0/'
 });
@@ -19,6 +20,9 @@ type LoginResponseType = {
 export const api = {
     login(email:string,password:string,rememberMe:boolean) {
        return  instanse.post<LoginResponseType>('auth/login', {email, password, rememberMe},)
+    },
+    me(token:string) {
+        return instanse.post<LoginResponseType>('auth/me', {token})
     }
 }
 

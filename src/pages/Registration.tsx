@@ -26,15 +26,15 @@ export const Registration = (props: PropsType) => {
 
         const onChangeLogin = useCallback((e: ChangeEvent<HTMLInputElement>) => {
             setEmail(e.currentTarget.value)
-        }, [email])
+        }, [])
 
         const onChangePassword = useCallback( (e: ChangeEvent<HTMLInputElement>) => {
             setPassword(e.currentTarget.value)
-        }, [password])
+        }, [])
 
         const onChangePasswordConfirm = useCallback((e: ChangeEvent<HTMLInputElement>) => {
             setPasswordConfirm(e.currentTarget.value)
-        }, [passwordConfirm])
+        }, [])
 
         const onClickSubmit = () => {
             dispatch(actions.setValueForm(email, password, passwordConfirm))
@@ -42,7 +42,7 @@ export const Registration = (props: PropsType) => {
         }
 
         if(state.reqSuccess) {
-        return <Redirect to='/profile'/>
+        return <Redirect to='/login'/>
         }
 
         let error = password.length < 8 ? true : false;
