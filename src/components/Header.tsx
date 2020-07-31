@@ -22,18 +22,26 @@ const Header = (props: Props) => {
 
     return (
         <div className='header_block'>
-            <NavLink to={'/profile'}>
-                Profile
-            </NavLink>
-            {!isAuth && <NavLink to={'/login'}>
-                Login
-            </NavLink>}
-            {!isAuth && <NavLink to={'/registration'}>
-                Registration
-            </NavLink>}
-            {isAuth && <Button onClick={onClickLogout} color='red'>
-                Log out
-            </Button>}
+            <div>
+                <NavLink to={'/profile'}>
+                    Profile
+                </NavLink>
+            </div>
+            {!isAuth &&
+            <div>
+                <NavLink to={'/login'}>
+                    Login
+                </NavLink>
+                <NavLink to={'/registration'}>
+                    Registration
+                </NavLink>
+            </div>
+            }
+            {isAuth &&
+                <Button onClick={onClickLogout} color='red'>
+                    Log out
+                </Button>
+            }
 
         </div>
     );

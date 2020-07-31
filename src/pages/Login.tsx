@@ -8,6 +8,7 @@ import {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import {AppStateType} from "../redux/store";
 import { Redirect } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import GoogleLogin from "react-google-login";
 
 
 
@@ -23,15 +24,28 @@ type Props = {
          }
      }
 
+     const validate = () => {
+         if (!email.includes('@')) {
+             let emailError = 'Incorrect email';
+             setEmailError(emailError)
+         }
+         if(password.length < 8) {
+             let passwordError = 'Password must be more than 7 characters...'
+             setPasswordError(passwordError)
+         }
+     }
+
      useEffect(() => {
          readCookie()
      },[])
 
-
+     const dispatch = useDispatch()
      const [email, setEmail] = useState('');
+     const [emailError, setEmailError] = useState('');
+     const [passwordError, setPasswordError] = useState('');
      const [password, setPassword] = useState('');
      const [rememberMe, setRememberMe] = useState(false);
-     const dispatch = useDispatch()
+
 
      const {isAuth,status,errorMessage} = useSelector((state: AppStateType) => state.login)
 
@@ -49,21 +63,36 @@ type Props = {
 
 
      const onClickLogin = () => {
+         validate()
          dispatch(login(email,password,rememberMe))
+     }
+
+     const responseGoogle = (response:any) => {
+        console.log(response)
+        console.log(response.profileObj)
      }
 
      if(isAuth) {
          return <Redirect to='/profile'/>
      }
 
-     console.log(errorMessage)
-
      return (
          <div className='login-form'>
              <h2>Log in</h2>
-             <Field type='text' onChange={onEmailChange} placeholder='Email address'/>
-             <Field type='password' onChange={onPasswordChange} placeholder='Password'/>
-             <Field type='checkbox' onChange={onRememberMeChange} />
+             <Field type='email'
+                    onChange={onEmailChange}
+                    placeholder='Email address'/>
+                    <span className='error_message'>{emailError}</span>
+             <Field type='password'
+                    onChange={onPasswordChange}
+                    placeholder='Password'/>
+                    <span className='error_message'>{passwordError}</span>
+             <div>
+                 <Field type='checkbox'
+                        onChange={onRememberMeChange} />
+                        <span> Remember</span>
+             </div>
+
              {
                  status === statuses.ERROR
                  && <div className='error_message'>
@@ -73,7 +102,16 @@ type Props = {
              <Button onClick={onClickLogin} color='blue' status={status}>
                  {status === statuses.INPROGRESS ? 'LOADING...' : ' LOG IN'}
              </Button>
-
+             <span>OR</span>
+             <div className='login-form_google-auth'>
+                 <GoogleLogin
+                     clientId='567755172781-bjt348j3gbpdplvmnis0ri45eqi0l3o1.apps.googleusercontent.com'
+                     buttonText='Login'
+                     onSuccess={responseGoogle}
+                     onFailure={responseGoogle}
+                     cookiePolicy={'single_host_origin'}
+                 />
+             </div>
          </div>
      );
  });
