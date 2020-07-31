@@ -30,6 +30,7 @@ const registrationReducer = (state: InitialStateType = InitialState, action: Act
     }
 };
 
+
 export default registrationReducer
 
 
