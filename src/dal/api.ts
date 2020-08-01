@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {CardPack} from "../types/entities";
 
 
 const instanse = axios.create({
@@ -6,22 +7,35 @@ const instanse = axios.create({
 });
 
 type LoginResponseType = {
-    email:string
-    name:string
-    isAdmin:boolean
-    rememberMe:boolean
+    email: string
+    name: string
+    isAdmin: boolean
+    rememberMe: boolean
+    token: string
+    tokenDeathTime: number
+    __v: number
+    _id: string
+    success: boolean
+}
+
+type PackResponseType = {
+    cardPacks:Array<CardPack>
+    cardPacksTotalCount:number
+    maxGrade:number
+    minGrade:number
+    page:number
+    pageCount:number
     token:string
-    tokenDeathTime:number
-    __v:number
-    _id:string
-    success:boolean
 }
 
 export const api = {
-    login(email:string,password:string,rememberMe:boolean) {
-       return  instanse.post<LoginResponseType>('auth/login', {email, password, rememberMe},)
+    getPacks(token: string | undefined) {
+        return instanse.get<PackResponseType>(`cards/pack?token=${token}`)
     },
-    me(token:string) {
+    login(email: string, password: string, rememberMe: boolean) {
+        return instanse.post<LoginResponseType>('auth/login', {email, password, rememberMe},)
+    },
+    me(token: string) {
         return instanse.post<LoginResponseType>('auth/me', {token})
     }
 }
