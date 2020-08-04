@@ -52,7 +52,7 @@ export const Registration = (props: PropsType) => {
     }
 
 
-    let error = password.length < 8 ? true : false;
+    let error = password.length < 8
     let Error = password !== passwordConfirm ? true : false
     let disabled = error || Error ? true : false
 

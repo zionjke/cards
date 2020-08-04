@@ -10,3 +10,24 @@ export type CardPack = {
     created: string
     updated: string
 }
+
+export type CardType = {
+    answer: string
+    answerImg: string
+    answerVideo: any
+    cardsPack_id: string
+    comments: any
+    created: string
+    grade: number
+    question: string
+    questionImg: string
+    questionVideo: any
+    rating: number
+    shots: number
+    type: string
+    updated: string
+    user_id: string
+    __v: number
+    _id: string
+}
+

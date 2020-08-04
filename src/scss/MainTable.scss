@@ -1,0 +1,22 @@
+.main_table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.packs {
+  display: flex;
+  min-width: 450px;
+  min-height: 200px;
+
+  flex-direction: column;
+  border: 1px solid;
+}
+
+.cards {
+  display: flex;
+  min-width: 450px;
+  min-height: 200px;
+  flex-direction: column;
+  border: 1px solid;
+}
