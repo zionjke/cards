@@ -8,6 +8,7 @@ import recoverPwReducer from "./reducers/recoverPwReducer";
 import packReducer from "./reducers/packReducer";
 import cardsReducer from "./reducers/cardsReducer";
 
+
 const rootReducer = combineReducers({
     login: loginReducer,
     registration: registrationReducer,
