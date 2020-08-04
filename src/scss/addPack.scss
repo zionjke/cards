@@ -1,0 +1,27 @@
+.add-pack_form {
+  margin: 20px auto;
+
+  &-block {
+    .button {
+      margin-right: 10px;
+      margin-top: 15px;
+    }
+  }
+
+  &-new {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: opacity 0.15s ease-in-out;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    span {
+      font-size: 16px;
+      margin-left: 19px;
+    }
+  }
+}

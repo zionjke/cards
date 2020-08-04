@@ -15,6 +15,7 @@ export const statuses = {
 type InitialStateType = typeof InitialState
 
 const InitialState = {
+    _id: '',
     isAuth:false,
     email: '',
     name: '',
@@ -72,9 +73,9 @@ export const login = (email: string, password: string, rememberMe: boolean): Thu
 
 export const authMe = (token:string):ThunkType => (dispatch:Dispatch<LoginActionTypes>) => {
     api.me(token).then((r) => {
-        let {email, name, isAdmin,  token} = r.data
+        let {email, name, isAdmin,  token, _id} = r.data
         Cookies.set('token',token)
-        dispatch(action.setUserData(email, name, isAdmin))
+        dispatch(action.setUserData(email, name, isAdmin,_id))
         dispatch(action.setIsAuth(true))
     })
 }
