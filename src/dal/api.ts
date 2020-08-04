@@ -18,25 +18,31 @@ type LoginResponseType = {
     success: boolean
 }
 
-type PackResponseType = {
-    cardPacks:Array<CardPack>
-    cardPacksTotalCount:number
-    maxGrade:number
-    minGrade:number
-    page:number
-    pageCount:number
-    token:string
+type PacksResponseType = {
+    cardPacks: Array<CardPack>
+    cardPacksTotalCount: number
+    maxGrade: number
+    minGrade: number
+    page: number
+    pageCount: number
+    token: string
 }
 
 export const api = {
-    getPacks(token: string | undefined) {
-        return instanse.get<PackResponseType>(`cards/pack?token=${token}`)
+    getPacks(token: string | undefined,userId:string) {
+        return instanse.get<PacksResponseType>(`cards/pack?token=${token}&user_id=${userId}`)
     },
     login(email: string, password: string, rememberMe: boolean) {
         return instanse.post<LoginResponseType>('auth/login', {email, password, rememberMe},)
     },
     me(token: string) {
         return instanse.post<LoginResponseType>('auth/me', {token})
+    },
+    addPack(token: string | undefined,name:string) {
+        return instanse.post('cards/pack', {cardsPack: {name}, token})
+    },
+    deletePack(token: string | undefined, id: string) {
+        return instanse.delete(`cards/pack?token=${token}&id=${id}`)
     }
 }
 

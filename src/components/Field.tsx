@@ -7,11 +7,15 @@ type Props = {
     placeholder?: string,
     onChange?: (e:ChangeEvent<HTMLInputElement>)=> void,
     error?: any
+    value?: string
+    onKeyPress?:any
 };
-const Field: React.FC<Props> = ({type, placeholder, onChange, error}) => {
+const Field: React.FC<Props> = ({type, placeholder, onChange, error,onKeyPress,value}) => {
 
     return (
         <input onChange={onChange}
+               value={value}
+               onKeyPress={onKeyPress}
                placeholder={placeholder}
                type={type}
                className={classNames('field',{

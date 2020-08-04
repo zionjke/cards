@@ -1,33 +1,38 @@
-// @flow
 import * as React from 'react';
-import {useEffect} from "react";
-import {getPacks} from "../redux/reducers/packReducer";
-import Cookies from "js-cookie";
-import {authMe} from "../redux/reducers/loginReducer";
-import {useDispatch} from "react-redux";
+import {useCallback, useEffect} from "react";
+import {addPack, deletePack, getPacks} from "../redux/reducers/packReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "../redux/store";
+import Pack from '../components/Pack';
+import {action} from "../redux/actions/login";
+import AddPack from "../components/AddPack";
 
-type Props = {
-
-};
-const Packs = (props: Props) => {
+type Props = {};
+const Packs = React.memo((props: Props) => {
     const dispatch = useDispatch()
-    const readCookie = () => {
-        const token = Cookies.get('token');
-        if(token) {
-            dispatch(authMe(token))
-        }
-    }
+    const {cardPacks} = useSelector(({packs}: AppStateType) => packs)
+    const {_id} = useSelector(({login}:AppStateType) => login)
 
     useEffect(() => {
-        readCookie()
-        dispatch(getPacks())
-    })
+        dispatch(getPacks(_id))
+        dispatch(action.setIsAuth(true))
+    }, [])
+
+    const onAddPack = useCallback((name) => {
+        dispatch(addPack(name))
+    },[])
+
+    const onDeletePack = useCallback((packId: string) => {
+        dispatch(deletePack(packId))
+    },[])
+
 
     return (
         <div>
-
+            <AddPack onAddPack={onAddPack}/>
+            <Pack  onDeletePack={onDeletePack} cardPacks={cardPacks}/>
         </div>
     );
-};
+});
 
 export default Packs
