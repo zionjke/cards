@@ -27,4 +27,7 @@ export type InferActionTypes<T> = T extends { [keys: string]: (...args: any[]) =
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
+// @ts-ignore
+window.store = store
+
 export default store

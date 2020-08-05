@@ -17,6 +17,7 @@ type Props = {
 };
  const Login = React.memo((props: Props) => {
 
+
      const validate = () => {
          if (!email.includes('@')) {
              let emailError = 'Incorrect email';
