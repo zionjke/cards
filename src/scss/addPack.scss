@@ -1,9 +1,9 @@
 .add-pack_form {
-  margin: 20px auto;
-
+  width: 50%;
+  margin: 25px auto;
   &-block {
     .button {
-      margin-right: 10px;
+      margin-left: 10px;
       margin-top: 15px;
     }
   }
@@ -17,11 +17,8 @@
 
     &:hover {
       opacity: 0.8;
+      font-weight: bold;
     }
 
-    span {
-      font-size: 16px;
-      margin-left: 19px;
-    }
   }
 }

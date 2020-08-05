@@ -1,5 +1,5 @@
 #table {
-  margin: 50px auto;
+  margin: 25px auto;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 50%;
@@ -42,5 +42,11 @@
 }
 #table .pack-add_button {
   background-color: cornsilk;
+}
+
+.update-popup {
+  width: 150px;
+  height: 150px;
+  background-color: black;
 }
 

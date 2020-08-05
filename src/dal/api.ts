@@ -29,13 +29,13 @@ type PacksResponseType = {
 }
 
 export const api = {
-    getPacks(token: string | undefined,userId:string) {
+    getPacks(token: string | undefined ,userId:string) {
         return instanse.get<PacksResponseType>(`cards/pack?token=${token}&user_id=${userId}`)
     },
     login(email: string, password: string, rememberMe: boolean) {
         return instanse.post<LoginResponseType>('auth/login', {email, password, rememberMe},)
     },
-    me(token: string) {
+    me(token: string | undefined) {
         return instanse.post<LoginResponseType>('auth/me', {token})
     },
     addPack(token: string | undefined,name:string) {
@@ -43,6 +43,9 @@ export const api = {
     },
     deletePack(token: string | undefined, id: string) {
         return instanse.delete(`cards/pack?token=${token}&id=${id}`)
+    },
+    updatePack(_id:string,name:string,token:string | undefined) {
+        return instanse.put('cards/pack',{cardsPack:{_id,name},token})
     }
 }
 

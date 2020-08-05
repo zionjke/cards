@@ -32,6 +32,20 @@ const packReducer = (state: InitialStateType = InitialState, action: PacksAction
                 ...state,
                 cardPacks: state.cardPacks.filter(pack => pack._id !== action.packId)
             }
+        case "PACKS/REDUCER/UPDATE_PACK":
+            return {
+                ...state,
+                cardPacks: state.cardPacks.map(pack => {
+                    if(pack._id !== action.packId) {
+                        return pack
+                    } else {
+                        return {
+                            ...pack,
+                            name:action.name
+                        }
+                    }
+                })
+            }
     }
     return state
 };
@@ -61,5 +75,14 @@ export const deletePack = (packId: string): ThunkType => (dispatch: Dispatch<Pac
         dispatch(action.deletePack(packId))
     })
 }
+
+export const updatePack = (packId:string,name:string):ThunkType => (dispatch:Dispatch<PacksActionTypes>) => {
+    let token = Cookies.get('token')
+    api.updatePack(packId,name,token).then((r) => {
+        Cookies.set('token',r.data.token)
+        dispatch(action.updatePack(packId,name))
+    })
+}
+
 
 export default packReducer
