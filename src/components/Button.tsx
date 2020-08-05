@@ -6,7 +6,7 @@ type Props = {
     children?: string
     color?:  string
     disabled? : boolean,
-    onClick?: any
+    onClick?: () => void
     isLoading?: boolean
     status?:string
 };

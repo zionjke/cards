@@ -17,13 +17,6 @@ type Props = {
 };
  const Login = React.memo((props: Props) => {
 
-     const readCookie = () => {
-         const token = Cookies.get('token');
-         if(token) {
-             dispatch(authMe(token))
-         }
-     }
-
      const validate = () => {
          if (!email.includes('@')) {
              let emailError = 'Incorrect email';
@@ -36,7 +29,7 @@ type Props = {
      }
 
      useEffect(() => {
-         readCookie()
+         dispatch(authMe())
      },[])
 
      const dispatch = useDispatch()

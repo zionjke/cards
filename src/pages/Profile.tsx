@@ -13,17 +13,8 @@ type Props = {
 const Profile = (props: Props) => {
     const dispatch = useDispatch()
 
-    const readCookie = () => {
-        const token = Cookies.get('token');
-        if(token) {
-            dispatch(authMe(token))
-        } else {
-            return <Redirect to={'/login'}/>
-        }
-    }
-
     useEffect(() => {
-        readCookie()
+        dispatch(authMe())
     },[])
 
 

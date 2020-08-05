@@ -4,15 +4,17 @@ import Field from "./Field";
 import Button from "./Button";
 
 type Props = {
-    addItem?:(title:string)=>void
+    addItem?: (title: string) => void
+    cancelButton?: boolean
+    toggleFormVisible?:() => void
 };
-const NewItemForm:React.FC<Props> = ({addItem}) => {
+const NewItemForm: React.FC<Props> = ({addItem, cancelButton,toggleFormVisible}) => {
     const [error, setError] = useState<boolean>(false);
     const [title, setTitle] = useState<string>('');
 
     const onAddItemClick = () => {
         let newTitle = title.trim();
-        if(title === '') {
+        if (title === '') {
             setError(true)
         } else {
             setError(false);
@@ -21,12 +23,12 @@ const NewItemForm:React.FC<Props> = ({addItem}) => {
         }
     }
 
-    const onTitleChanged = (e:ChangeEvent<HTMLInputElement>) => {
+    const onTitleChanged = (e: ChangeEvent<HTMLInputElement>) => {
         setError(false)
         setTitle(e.currentTarget.value)
     }
 
-    const onKeyPress = (e:React.KeyboardEvent<HTMLInputElement>) => {
+    const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             onAddItemClick();
         }
@@ -40,9 +42,12 @@ const NewItemForm:React.FC<Props> = ({addItem}) => {
                    onKeyPress={onKeyPress}
                    onChange={onTitleChanged}
                    placeholder='Enter pack name'/>
-                   <Button color='green' onClick={onAddItemClick}>
-                       Add new pack
-                   </Button>
+            <Button color='green' onClick={onAddItemClick}>
+                Add new pack
+            </Button>
+            {cancelButton &&
+            <Button color='gray' onClick={toggleFormVisible}>Cancel</Button>
+            }
         </div>
     );
 };
