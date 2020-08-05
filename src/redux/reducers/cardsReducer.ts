@@ -3,9 +3,13 @@ import {AppStateType} from "../store";
 import {Dispatch} from "redux";
 import {apiCards} from "../../api/api";
 import {action, CardsActionTypes} from "../actions/cards";
+import Cookies from "js-cookie";
+import {NewCardType} from "../../types/entities";
 
 
-type InitialStateType = typeof InitialState
+type InitialStateType = {
+    cards: Array<NewCardType>
+}
 
 const InitialState = {
     cards: [],
@@ -18,7 +22,33 @@ const cardsReducer = (state: InitialStateType = InitialState, action: CardsActio
         case 'CARDS/REDUCER/SET_CARDS':
             return {
                 ...state,
-                cards: action.cards.cards
+                cards: action.cards.map((el) => {
+                    return {...el, isVisible: false}
+                })
+            }
+        case 'CARDS/REDUCER/ADD_NEW_CARD':
+            return {
+                ...state,
+                cards: [...state.cards, action.newCard]
+            }
+        case "CARDS/REDUCER/DELETE_CARD":
+            return {
+                ...state,
+                cards: state.cards.filter(f => f._id !== action.deletedCard._id)
+            }
+        case "CARDS/REDUCER/SET_VISIBLE":
+            debugger
+            return {
+                ...state,
+                cards: state.cards.map(card => {
+                    if (card._id === action.id) {
+                        return {
+                            ...card, isVisible: action.payload
+                        }
+                    } else {
+                        return  card
+                    }
+                })
             }
 
 
@@ -33,10 +63,10 @@ type ThunkType = ThunkAction<void, AppStateType, unknown, CardsActionTypes>
 //thunk
 export const getCards = (id: string): ThunkType => async (dispatch: Dispatch<CardsActionTypes>) => {
     try {
-        let token = localStorage.getItem('token')
+        let token = Cookies.get('token')
         let res = await apiCards.getCards(id, token)
-        localStorage.setItem('token', res.token)
-        dispatch(action.setCards(res))
+        Cookies.set('token', res.token)
+        dispatch(action.setCards(res.cards))
     } catch (e) {
         console.log(e)
     }
@@ -44,12 +74,10 @@ export const getCards = (id: string): ThunkType => async (dispatch: Dispatch<Car
 
 export const addNewCards = (packId: string, question: string, answer: string) => async (dispatch: Dispatch<CardsActionTypes>) => {
     try {
-        debugger
-        let card = {cardsPack_id: packId, question, answer}
-        let token = localStorage.getItem('token')
-        let res = await apiCards.addCards({card}, token)
-        localStorage.setItem('token', res.token)
-        console.log(res)
+        let token = Cookies.get('token')
+        let res = await apiCards.addCards(packId, question, answer, token)
+        Cookies.set('token', res.token)
+        dispatch(action.addCards(res.newCard))
     } catch (e) {
         console.log(e)
     }
@@ -57,10 +85,10 @@ export const addNewCards = (packId: string, question: string, answer: string) =>
 
 export const deleteCards = (id: string) => async (dispatch: Dispatch<CardsActionTypes>) => {
     try {
-        let token = localStorage.getItem('token')
+        let token = Cookies.get('token')
         let res = await apiCards.deleteCards(token, id)
-        localStorage.setItem('token', res.token)
-        console.log(res)
+        Cookies.set('token', res.token)
+        dispatch(action.deleteCards(res.deletedCard))
     } catch (e) {
         console.log(e)
     }

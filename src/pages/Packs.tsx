@@ -16,7 +16,7 @@ const Packs = React.memo((props: Props) => {
     useEffect(() => {
         dispatch(getPacks(_id))
         dispatch(action.setIsAuth(true))
-    }, [])
+    }, [_id])
 
     const onAddPack = useCallback((name) => {
         dispatch(addPack(name))

@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom';
 import Login from "./pages/Login";
 import {Registration} from "./pages/Registration";
 import Packs from "./pages/Packs";
+import Cards from "./pages/Cards";
 
 const App = () => {
 
@@ -18,6 +19,7 @@ const App = () => {
             <Route exact path={'/login'} render={() => <Login/>}/>
             <Route exact path={'/registration'} render={() => <Registration/>}/>
             <Route path={'/packs'} render={() => <Packs/>}/>
+            <Route path={'/card/:id'} render={() => <Cards/>}/>
         </div>
     </div>
   );

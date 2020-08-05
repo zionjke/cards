@@ -1,60 +1,93 @@
 import * as React from 'react';
-import {ChangeEvent, useEffect, useState} from "react";
-import {CardType} from "../types/entities";
+import '../scss/cards.scss'
+import {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
+import {NewCardType} from "../types/entities";
 import AddedNewCard from "./AddedNewCards";
 import {useDispatch, useSelector} from "react-redux";
 import {addNewCards, deleteCards, getCards} from "../redux/reducers/cardsReducer";
 import {useParams} from 'react-router-dom';
 import {AppStateType} from "../redux/store";
-
+import Button from "../components/Button";
+import visibleIcon from '../assets/visible.png'
+import nonVisibleIcon from '../assets/nonVisible.png'
+import deleteIcon from '../assets/delete.png'
+import {action} from "../redux/actions/cards";
 
 type Props = {};
 
 
 const Cards = (props: Props) => {
 
-    const dispatch = useDispatch();
-    const params = useParams<{ packId: string }>()
-    const [questionTitle, setQuestionTitle] = useState('')
-    const [answerTitle, setAnswerTitle] = useState('')
-    const {cards} = useSelector(({cards}: AppStateType) => cards)
+        const dispatch = useDispatch();
+        let {id} = useParams()
+        const [questionTitle, setQuestionTitle] = useState('')
+        const [answerTitle, setAnswerTitle] = useState('')
+        const [visible, setVisible] = useState(false)
+        const {cards} = useSelector(({cards}: AppStateType) => cards)
 
 
-    useEffect(() => {
-        dispatch(getCards(params.packId))
-    }, [params.packId])
+        useEffect(() => {
+            dispatch(getCards(id))
+        }, [])
 
-    const onClickAddCard = () => {
-        dispatch(addNewCards(params.packId, questionTitle, answerTitle))
+        const onClickAddCard = () => {
+            dispatch(addNewCards(id, questionTitle, answerTitle))
+            setQuestionTitle('')
+            setAnswerTitle('')
+
+        }
+        const onClickDeleteCard = useCallback((id: string) => {
+            dispatch(deleteCards(id))
+        }, [])
+        const onChangeQuestionTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+            setQuestionTitle(e.currentTarget.value)
+        }, [])
+        const onChangeAnswerTitle =  useCallback((e: ChangeEvent<HTMLInputElement>) => {
+            setAnswerTitle(e.currentTarget.value)
+        }, [])
+
+
+        const clickSetVisible =(id: string) => {
+            setVisible(!visible)
+            dispatch(action.setVisible(visible, id))
+            console.log(visible)
+        }
+
+
+        return (
+            <>
+                <AddedNewCard questionTitle={questionTitle}
+                              answerTitle={answerTitle}
+                              onChangeQuestionTitle={onChangeQuestionTitle}
+                              onChangeAnswerTitle={onChangeAnswerTitle}
+                              onClickAddCard={onClickAddCard}
+                />
+                <table id='tableCards'>
+                    <tr>
+                        <th>Question</th>
+                        <th>Answer</th>
+                    </tr>
+                    {
+                        cards && cards.map((card: NewCardType, index: number) =>
+                            <tr key={index}>
+                                <td>{card.question}</td>
+                                <td className={card.isVisible ? '' : 'nonVisible'}>{card.answer}</td>
+                                <td className='card-buttons'>
+                                    <img onClick={() => clickSetVisible(card._id)}
+                                         className='imgEye'
+                                         src={card.isVisible ? nonVisibleIcon : visibleIcon}/>
+                                    <img className='deleteIcon'
+                                         onClick={() => onClickDeleteCard(card._id)}
+                                         src={deleteIcon}/>
+                                </td>
+                            </tr>)
+                    }
+
+                </table>
+            </>
+        );
     }
-    const onClickDeleteCard = (id: string) => {
-        dispatch(deleteCards(id))
-    }
-    const onChangeQuestionTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        setQuestionTitle(e.currentTarget.value)
-    }
-    const onChangeAnswerTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        setAnswerTitle(e.currentTarget.value)
-    }
 
 
-    return (
-        <div>
-            <AddedNewCard questionTitle={questionTitle}
-                          answerTitle={answerTitle}
-                          onChangeQuestionTitle={onChangeQuestionTitle}
-                          onChangeAnswerTitle={onChangeAnswerTitle}
-                          onClickAddCard={onClickAddCard}
-            />
-            {
-                cards && cards.map((card: CardType, index: number) =>
-                    <div key={index}>
-                        Question: {card.question} --- Answer: {card.answer}
-                        <button onClick={() => onClickDeleteCard(card._id)}>delete</button>
-                    </div>)
-            }
-        </div>
-    );
-};
 
 export default Cards

@@ -18,7 +18,8 @@ type Props = {
  const Login = React.memo((props: Props) => {
 
      const readCookie = () => {
-         const token = Cookies.get('token');
+         const token = localStorage.getItem('token')
+         //const token = Cookies.get('token');
          if(token) {
              dispatch(authMe(token))
          }

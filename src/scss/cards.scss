@@ -1,0 +1,68 @@
+
+#tableCards {
+  margin: 50px 70px;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 1200px;
+}
+
+#tableCards td, #table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+//#table tr:nth-child(even){background-color: #f2f2f2;}
+
+//#table tr:hover {background-color: #ddd;}
+
+#tableCards th {
+  min-width: 200px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #008CBA;
+  color: white;
+}
+
+#tableCards .card-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90px;
+  background-color: cornsilk;
+
+  .button {
+    padding: 10px;
+    margin-left: 10px;
+  }
+}
+
+#tableCards .pack-links {
+  width: 100px;
+  a {
+    font-weight: bold;
+    margin-left: 10px;
+    text-decoration: none;
+    color: #4CAF50;;
+  }
+}
+
+#tableCards .pack-add_button {
+  background-color: cornsilk;
+}
+.deleteIcon {
+  width: 25px;
+  height: 25px;
+}
+
+.imgEye {
+  width: 25px;
+  height: 25px;
+}
+
+.nonVisible {
+  color: black;
+  background: black;
+  opacity: 0.1;
+}
+
