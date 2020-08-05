@@ -4,7 +4,9 @@ import {Dispatch} from "redux";
 import {apiCards} from "../../api/api";
 import {action, CardsActionTypes} from "../actions/cards";
 import Cookies from "js-cookie";
+
 import {NewCardType} from "../../types/entities";
+
 
 
 type InitialStateType = {
@@ -66,7 +68,10 @@ export const getCards = (id: string): ThunkType => async (dispatch: Dispatch<Car
         let token = Cookies.get('token')
         let res = await apiCards.getCards(id, token)
         Cookies.set('token', res.token)
+
         dispatch(action.setCards(res.cards))
+
+
     } catch (e) {
         console.log(e)
     }
@@ -74,10 +79,13 @@ export const getCards = (id: string): ThunkType => async (dispatch: Dispatch<Car
 
 export const addNewCards = (packId: string, question: string, answer: string) => async (dispatch: Dispatch<CardsActionTypes>) => {
     try {
+
         let token = Cookies.get('token')
         let res = await apiCards.addCards(packId, question, answer, token)
         Cookies.set('token', res.token)
         dispatch(action.addCards(res.newCard))
+
+  
     } catch (e) {
         console.log(e)
     }

@@ -71,7 +71,8 @@ export const login = (email: string, password: string, rememberMe: boolean): Thu
 
 }
 
-export const authMe = (token:string):ThunkType => (dispatch:Dispatch<LoginActionTypes>) => {
+export const authMe = ():ThunkType => (dispatch:Dispatch<LoginActionTypes>) => {
+    let token = Cookies.get('token')
     api.me(token).then((r) => {
         let {email, name, isAdmin,  token, _id} = r.data
         Cookies.set('token',token)

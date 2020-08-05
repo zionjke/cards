@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import '../scss/cards.scss'
 import {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
 import {NewCardType} from "../types/entities";
@@ -13,10 +14,12 @@ import nonVisibleIcon from '../assets/nonVisible.png'
 import deleteIcon from '../assets/delete.png'
 import {action} from "../redux/actions/cards";
 
+
 type Props = {};
 
 
 const Cards = (props: Props) => {
+
 
         const dispatch = useDispatch();
         let {id} = useParams()
@@ -87,6 +90,7 @@ const Cards = (props: Props) => {
             </>
         );
     }
+
 
 
 

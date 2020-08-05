@@ -7,6 +7,7 @@ import profileReducer from "./reducers/profileReducer";
 import recoverPwReducer from "./reducers/recoverPwReducer";
 import packReducer from "./reducers/packReducer";
 import cardsReducer from "./reducers/cardsReducer";
+import filterReducer from "./reducers/filterReducer";
 
 
 const rootReducer = combineReducers({
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
     profile:profileReducer,
     recoverPassword:recoverPwReducer,
     packs: packReducer,
-    cards: cardsReducer
+    cards: cardsReducer,
+    filter:filterReducer
 });
 
 export type AppStateType = ReturnType<typeof rootReducer>
