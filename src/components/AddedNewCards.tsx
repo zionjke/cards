@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {ChangeEvent} from "react";
+import Field from "./Field";
+import Button from "./Button";
 
 
 type Props = {
@@ -15,13 +17,21 @@ const AddedNewCard = ({onChangeQuestionTitle, onChangeAnswerTitle, onClickAddCar
 
     return (
         <div>
-            <input onChange={onChangeQuestionTitle}
+            <Field onChange={onChangeQuestionTitle}
+                   placeholder={'question'}
+                   type='text'/>
+            <Field onChange={onChangeAnswerTitle}
+                   placeholder={'answer'}
+                   type='text'/>
+            <Button color='blue' onClick={onClickAddCard}>Add</Button>
+
+            {/*<input onChange={onChangeQuestionTitle}
                    value={questionTitle}
-                   placeholder={'question'}/>
-            <input onChange={onChangeAnswerTitle}
+                   placeholder={'question'}/>*/}
+            {/*<input onChange={onChangeAnswerTitle}
                    value={answerTitle}
-                   placeholder={'answer'}/>
-            <button onClick={onClickAddCard}>add card</button>
+                   placeholder={'answer'}/>*/}
+            {/*<button onClick={onClickAddCard}>add card</button>*/}
         </div>
 
     );

@@ -1,4 +1,4 @@
-import {apiRegistration} from "../../api/api";
+import {apiRegistration} from "../../dal/api";
 import {InferActionTypes} from "../store";
 import {Dispatch} from "react";
 

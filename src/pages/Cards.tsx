@@ -3,7 +3,7 @@ import * as React from 'react';
 import '../scss/cards.scss'
 import {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
 import {NewCardType} from "../types/entities";
-import AddedNewCard from "./AddedNewCards";
+import AddedNewCard from "../components/AddedNewCards";
 import {useDispatch, useSelector} from "react-redux";
 import {addNewCards, deleteCards, getCards} from "../redux/reducers/cardsReducer";
 import {useParams} from 'react-router-dom';
@@ -13,12 +13,14 @@ import visibleIcon from '../assets/visible.png'
 import nonVisibleIcon from '../assets/nonVisible.png'
 import deleteIcon from '../assets/delete.png'
 import {action} from "../redux/actions/cards";
+import {SearchFilter} from "../components/SearchFilter";
+import Field from "../components/Field";
 
 
 type Props = {};
 
 
-const Cards = (props: Props) => {
+const Cards = React.memo((props: Props) => {
 
 
         const dispatch = useDispatch();
@@ -27,6 +29,7 @@ const Cards = (props: Props) => {
         const [answerTitle, setAnswerTitle] = useState('')
         const [visible, setVisible] = useState(false)
         const {cards} = useSelector(({cards}: AppStateType) => cards)
+        const {search} = useSelector(({filter}: AppStateType) => filter)
 
 
         useEffect(() => {
@@ -45,33 +48,47 @@ const Cards = (props: Props) => {
         const onChangeQuestionTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
             setQuestionTitle(e.currentTarget.value)
         }, [])
-        const onChangeAnswerTitle =  useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        const onChangeAnswerTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
             setAnswerTitle(e.currentTarget.value)
         }, [])
 
 
-        const clickSetVisible =(id: string) => {
+        const clickSetVisible = (id: string) => {
             setVisible(!visible)
             dispatch(action.setVisible(visible, id))
-            console.log(visible)
         }
+
+        const filteredCards = cards.filter(card => card.question.toLowerCase().indexOf(search.toLowerCase()) !== -1)
 
 
         return (
-            <>
-                <AddedNewCard questionTitle={questionTitle}
-                              answerTitle={answerTitle}
-                              onChangeQuestionTitle={onChangeQuestionTitle}
-                              onChangeAnswerTitle={onChangeAnswerTitle}
-                              onClickAddCard={onClickAddCard}
-                />
+            <div className='main-cards'>
+                <SearchFilter/>
                 <table id='tableCards'>
                     <tr>
                         <th>Question</th>
                         <th>Answer</th>
                     </tr>
+                    <tr>
+                        <th>
+                            <Field onChange={onChangeQuestionTitle}
+                                   placeholder={'Add new question'}
+                                   value={questionTitle}
+                                   type='text'/>
+                        </th>
+                        <th>
+                            <Field onChange={onChangeAnswerTitle}
+                                   placeholder={'Add new answer'}
+                                   type='text'
+                                   value={answerTitle}/>
+                        </th>
+                        <th>
+                            <Button color='green' onClick={onClickAddCard}>Add</Button>
+                        </th>
+
+                    </tr>
                     {
-                        cards && cards.map((card: NewCardType, index: number) =>
+                        filteredCards && filteredCards.map((card: NewCardType, index: number) =>
                             <tr key={index}>
                                 <td>{card.question}</td>
                                 <td className={card.isVisible ? '' : 'nonVisible'}>{card.answer}</td>
@@ -85,13 +102,11 @@ const Cards = (props: Props) => {
                                 </td>
                             </tr>)
                     }
-
                 </table>
-            </>
+            </div>
         );
     }
-
-
+)
 
 
 export default Cards
