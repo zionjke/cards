@@ -39,7 +39,6 @@ const Packs = React.memo((props: Props) => {
     },[])
 
     const handlePageChange = useCallback((pageNumber:number) => {
-        debugger
         console.log(`active page is ${pageNumber}`);
         dispatch(actionPack.setPage(pageNumber))
     },[])
