@@ -4,7 +4,7 @@ import {CardPack} from "../types/entities";
 import Button from "./Button";
 import {Link} from 'react-router-dom';
 import {useCallback, useState} from "react";
-import {updatePack} from "../redux/reducers/packReducer";
+
 
 
 type Props = {

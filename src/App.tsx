@@ -12,12 +12,6 @@ import {authMe} from "./redux/reducers/loginReducer";
 
 
 const App = () => {
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(authMe())
-    })
-
   return (
     <div className="App">
         <Header/>
