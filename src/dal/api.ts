@@ -3,7 +3,8 @@ import {CardPack} from "../types/entities";
 
 
 const instanse = axios.create({
-    baseURL: 'http://localhost:7542/1.0/'
+    // baseURL: 'http://localhost:7542/1.0/'
+    baseURL:'https://cards-nya-back.herokuapp.com/1.0/'
 });
 
 type LoginResponseType = {
@@ -29,8 +30,8 @@ type PacksResponseType = {
 }
 
 export const api = {
-    getPacks(token: string | undefined ,userId:string) {
-        return instanse.get<PacksResponseType>(`cards/pack?token=${token}&user_id=${userId}`)
+    getPacks(token: string | undefined ,userId:string,page:number,pageCount:number) {
+        return instanse.get<PacksResponseType>(`cards/pack?token=${token}&user_id=${userId}&pageCount=${pageCount}&page=${page}`)
     },
     login(email: string, password: string, rememberMe: boolean) {
         return instanse.post<LoginResponseType>('auth/login', {email, password, rememberMe},)

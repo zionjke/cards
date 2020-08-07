@@ -7,7 +7,6 @@ import {authMe, login, statuses} from "../redux/reducers/loginReducer";
 import {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import {AppStateType} from "../redux/store";
 import { Redirect } from 'react-router-dom';
-import Cookies from 'js-cookie';
 import GoogleLogin from "react-google-login";
 
 
@@ -16,7 +15,6 @@ type Props = {
 
 };
  const Login = React.memo((props: Props) => {
-
 
      const validate = () => {
          if (!email.includes('@')) {
