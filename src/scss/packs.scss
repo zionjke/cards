@@ -2,7 +2,7 @@
   display: flex;
   list-style-type: none;
   width: 50%;
-  margin: 0 auto;
+  margin: 30px auto;
 
   a {
     color: black;
@@ -20,6 +20,11 @@
       background-color:#4CAF50;
       color: white;
       border-radius: 5px;
+
+      a {
+        color: white;
+      }
+
     }
 
     &:hover:not(.active) {
