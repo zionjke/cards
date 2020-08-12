@@ -15,7 +15,7 @@ export const SearchFilter = (props: Props) => {
 
     const onSearch = (e:ChangeEvent<HTMLInputElement>) => {
         dispatch(actionFilter.setSearchQuery(e.target.value.substr(0,20)))
-    }
+    };
 
     return (
         <div className='search-filter'>

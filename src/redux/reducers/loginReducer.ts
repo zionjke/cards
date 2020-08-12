@@ -16,14 +16,13 @@ type InitialStateType = typeof InitialState
 
 const InitialState = {
     _id: '',
-    isAuth:false,
+    isAuth: false,
     email: '',
     name: '',
     isAdmin: false,
     errorMessage: '',
-    status:statuses.INIT
+    status: statuses.INIT
 };
-
 
 
 const loginReducer = (state: InitialStateType = InitialState, action: LoginActionTypes): InitialStateType => {
@@ -58,7 +57,7 @@ export const login = (email: string, password: string, rememberMe: boolean): Thu
     dispatch(action.setStatus(statuses.INPROGRESS))
     api.login(email, password, rememberMe)
         .then(r => {
-            Cookies.set('token',r.data.token)
+            Cookies.set('token', r.data.token)
             const token = Cookies.get('token')
             // @ts-ignore
             dispatch(authMe(token))
@@ -71,21 +70,20 @@ export const login = (email: string, password: string, rememberMe: boolean): Thu
 
 }
 
-export const authMe = ():ThunkType => (dispatch:Dispatch<LoginActionTypes>) => {
+export const authMe = (): ThunkType => (dispatch: Dispatch<LoginActionTypes>) => {
     let token = Cookies.get('token')
     api.me(token).then((r) => {
-        let {email, name, isAdmin,  token, _id} = r.data
-        Cookies.set('token',token)
-        dispatch(action.setUserData(email, name, isAdmin,_id))
+        let {email, name, isAdmin, token, _id} = r.data
+        Cookies.set('token', token)
+        dispatch(action.setUserData(email, name, isAdmin, _id))
         dispatch(action.setIsAuth(true))
     })
 }
 
-export const logOut = ():ThunkType => (dispatch:Dispatch<LoginActionTypes>) => {
+export const logOut = (): ThunkType => (dispatch: Dispatch<LoginActionTypes>) => {
     Cookies.remove('token')
     dispatch(action.setIsAuth(false))
 }
-
 
 
 export default loginReducer
