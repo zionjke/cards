@@ -3,18 +3,15 @@ import * as React from 'react';
 import '../scss/cards.scss'
 import {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
 import {NewCardType} from "../types/entities";
-import AddedNewCard from "../components/AddedNewCards";
 import {useDispatch, useSelector} from "react-redux";
 import {addNewCards, deleteCards, getCards} from "../redux/reducers/cardsReducer";
 import {useParams} from 'react-router-dom';
 import {AppStateType} from "../redux/store";
 import Button from "../components/Button";
-import visibleIcon from '../assets/visible.png'
-import nonVisibleIcon from '../assets/nonVisible.png'
-import deleteIcon from '../assets/delete.png'
 import {action} from "../redux/actions/cards";
 import {SearchFilter} from "../components/SearchFilter";
 import Field from "../components/Field";
+import Card from "./Card";
 
 
 type Props = {};
@@ -86,27 +83,22 @@ const Cards = (props: Props) => {
                             <Button color='green' onClick={onClickAddCard}>Add</Button>
                         </th>
 
-                    </tr>
-                    {
-                        filteredCards && filteredCards.map((card: NewCardType, index: number) =>
-                            <tr key={index}>
-                                <td>{card.question}</td>
-                                <td className={card.isVisible ? '' : 'nonVisible'}>{card.answer}</td>
-                                <td className='card-buttons'>
-                                    <img onClick={() => clickSetVisible(card._id)}
-                                         className='imgEye'
-                                         src={card.isVisible ? nonVisibleIcon : visibleIcon}/>
-                                    <img className='deleteIcon'
-                                         onClick={() => onClickDeleteCard(card._id)}
-                                         src={deleteIcon}/>
-                                </td>
-                            </tr>)
-                    }
-                </table>
-            </div>
-        );
-    }
+                </tr>
+                {
+                    filteredCards && filteredCards.map((card: NewCardType, index: number) =>
+                        <Card clickSetVisible={clickSetVisible}
+                              onClickDeleteCard={onClickDeleteCard}
+                              card={card}
+                              key={card._id}
+                        />
+                    )
+                }
+            </table>
 
 
+
+           </div>
+    );
+}
 
 export default Cards

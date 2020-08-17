@@ -9,8 +9,9 @@ type Props = {
     onClick?: () => void
     isLoading?: boolean
     status?:string
+    card?: any
 };
-const Button:React.FC<Props> = ({children,color,disabled,onClick,status}) => {
+const Button:React.FC<Props> = ({card, children,color,disabled,onClick,status}) => {
     return (
             <button onClick={onClick}
                 className={classNames('button',{

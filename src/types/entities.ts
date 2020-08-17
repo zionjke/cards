@@ -47,3 +47,15 @@ export type NewCardType = {
     _id: string
 }
 
+export type updatedGrade = {
+    card_id: string
+    cardsPack_id: string
+    created: string
+    grade: number
+    shots: number
+    updated: string
+    user_id: string
+    __v: number
+    _id: string
+}
+

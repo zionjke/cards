@@ -8,7 +8,6 @@ import Cookies from "js-cookie";
 import {NewCardType} from "../../types/entities";
 
 
-
 type InitialStateType = {
     cards: Array<NewCardType>
 }
@@ -21,13 +20,6 @@ const InitialState = {
 
 const cardsReducer = (state: InitialStateType = InitialState, action: CardsActionTypes) => {
     switch (action.type) {
-        case 'CARDS/REDUCER/SET_CARDS':
-            return {
-                ...state,
-                cards: action.cards.map((el) => {
-                    return {...el, isVisible: false}
-                })
-            }
         case 'CARDS/REDUCER/ADD_NEW_CARD':
             return {
                 ...state,
@@ -48,21 +40,49 @@ const cardsReducer = (state: InitialStateType = InitialState, action: CardsActio
                             ...card, isVisible: action.payload
                         }
                     } else {
-                        return  card
+                        return card
                     }
                 })
             }
-
-
+        case 'CARDS/REDUCER/SET_CARDS':
+            return {
+                ...state,
+                cards: action.cards.map((el) => {
+                    return {...el, isVisible: false}
+                })
+            }
+        case 'SET_RATING_CARDS':
+            return {
+                ...state,
+                cards: state.cards.map(card => {
+                    if(card._id === action.obj.card_id) {
+                        return {
+                            ...card,
+                            grade: action.obj.grade
+                        }
+                    } else {
+                        return card
+                    }
+                })
+            }
         default:
             return state
     }
 }
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, CardsActionTypes>
-
-
 //thunk
+export const setRatingCards = (grade: number, id: string): ThunkType => async (dispatch: Dispatch<CardsActionTypes>) => {
+    try {
+        let token = Cookies.get('token')
+        let res = await apiCards.setGradeCard(token, grade, id)
+        Cookies.set('token', res.token)
+        dispatch(action.setRating(res.updatedGrade))
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 export const getCards = (id: string): ThunkType => async (dispatch: Dispatch<CardsActionTypes>) => {
     try {
         let token = Cookies.get('token')
@@ -95,6 +115,7 @@ export const deleteCards = (id: string): ThunkType => async (dispatch: Dispatch<
         console.log(e)
     }
 }
+
 
 
 export default cardsReducer
