@@ -3,15 +3,11 @@ import * as React from 'react';
 import '../scss/cards.scss'
 import {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
 import {NewCardType} from "../types/entities";
-import AddedNewCard from "../components/AddedNewCards";
 import {useDispatch, useSelector} from "react-redux";
 import {addNewCards, deleteCards, getCards} from "../redux/reducers/cardsReducer";
 import {useParams} from 'react-router-dom';
 import {AppStateType} from "../redux/store";
 import Button from "../components/Button";
-import visibleIcon from '../assets/visible.png'
-import nonVisibleIcon from '../assets/nonVisible.png'
-import deleteIcon from '../assets/delete.png'
 import {action} from "../redux/actions/cards";
 import {SearchFilter} from "../components/SearchFilter";
 import Field from "../components/Field";
@@ -98,7 +94,7 @@ const Cards = (props: Props) => {
                     )
                 }
             </table>
-            }
+
 
 
            </div>

@@ -51,16 +51,14 @@ export const api = {
 }
 
 export const apiRegistration = {
-
-    postRegistration(email: string, password: string) {
-        return axios.post('http://localhost:7542/1.0/auth/register',
     postRegistration(email:string, password:string) {
         debugger
         return  axios.post('https://cards-nya-back.herokuapp.com/1.0/auth/register',
             {email, password})
             .then(res => res.data)
     }
-};
+}
+
 
 export const apiCards = {
     getCards(id: string, token: string | undefined) {
@@ -68,13 +66,6 @@ export const apiCards = {
             .then(res => res.data)
     },
     addCards(packId: string, question: string, answer: string, token: string | undefined) {
-        return axios.post(`http://localhost:7542/1.0/cards/card`, {
-            card: {
-                cardsPack_id: packId,
-                question: question,
-                answer: answer
-            }, token
-        })
         return axios.post(`https://cards-nya-back.herokuapp.com/1.0/cards/card`, {card: {cardsPack_id: packId, question: question, answer: answer}, token})
             .then(res => res.data)
     },
