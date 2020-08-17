@@ -1,4 +1,5 @@
 #table {
+  position: relative;
   margin: 25px auto;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
@@ -44,9 +45,10 @@
   background-color: cornsilk;
 }
 
-.update-popup {
-  width: 150px;
-  height: 150px;
-  background-color: black;
-}
 
+.popup-window {
+  width: 300px;
+  padding: 10px;
+  background-color: white;
+  position: absolute;
+}

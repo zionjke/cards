@@ -1,6 +1,5 @@
 import * as React from 'react';
 import '../scss/pack.scss'
-import {CardPack} from "../types/entities";
 import Button from "./Button";
 import {Link} from 'react-router-dom';
 import {useCallback, useState} from "react";
@@ -9,10 +8,12 @@ import {useCallback, useState} from "react";
 
 type Props = {
     onUpdatePack:(id:string,name:string) => void
-    cardPacks: Array<CardPack>
+    name:string
+    grade: number
+    _id: string
     onDeletePack: (packId: string) => void
 };
-const Pack = React.memo(({onUpdatePack,cardPacks,onDeletePack}:Props) => {
+const Pack = React.memo(({onUpdatePack,onDeletePack,name,grade,_id}:Props) => {
     const [visiblePopup, setVisiblePopup] = useState<boolean>(false);
     const openPopup = useCallback(() => {
         setVisiblePopup(true)
@@ -23,25 +24,24 @@ const Pack = React.memo(({onUpdatePack,cardPacks,onDeletePack}:Props) => {
     },[])
 
     return (
-        <table id='table'>
-            <tr>
-                <th>Name</th>
-                <th>Grade</th>
-            </tr>
-            {
-                cardPacks.map(pack => <tr key={pack._id}>
-                        <td>{pack.name}</td>
-                        <td>{pack.grade}</td>
+           <tr>
+                        <td>{name}</td>
+                        <td>{grade}</td>
                         <td className='pack-buttons'>
-                            <Button onClick={() => onDeletePack(pack._id)} color='red'>
+                            <Button onClick={() => onDeletePack(_id)} color='red'>
                                 X
                             </Button>
-                            <Button onClick={() => onUpdatePack(pack._id,'Update Pack')} color='blue'>
+                            <Button onClick={openPopup} color='blue'>
                                 Update
                             </Button>
+                            {visiblePopup &&
+                            <div className='popup-window'>
+                                Popup
+                            </div>
+                            }
                         </td>
                         <td className='pack-links'>
-                            <Link to={`/card/${pack._id}`}>
+                            <Link to={`/card/${_id}`}>
                                 Cards
                             </Link>
                             <Link to='card/'>
@@ -49,9 +49,9 @@ const Pack = React.memo(({onUpdatePack,cardPacks,onDeletePack}:Props) => {
                             </Link>
                         </td>
                     </tr>
-                )}
-        </table>
-    );
+                )
+
+
 });
 
 export default Pack
