@@ -58,7 +58,7 @@ export const Registration = (props: PropsType) => {
 
     return (
         <div className='registration_block'>
-            <h1>Welcome</h1>
+            <h2>Welcome</h2>
             <Field type={'email'} onChange={onChangeLogin} placeholder={'Email'}/>
             <Field type={'password'} error={error} onChange={onChangePassword} placeholder={'Password'}/>
             {error
@@ -70,7 +70,7 @@ export const Registration = (props: PropsType) => {
                 ? <div className='error_password'>Password mismatch</div>
                 : ''
             }
-            <Button disabled={disabled} onClick={onClickSubmit} color={'green'}>Confirm</Button>
+            <Button disabled={disabled} onClick={onClickSubmit} color={'green'}>CONFIRM</Button>
         </div>
     );
 }

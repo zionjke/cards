@@ -82,7 +82,7 @@ type Props = {
              <div>
                  <Field type='checkbox'
                         onChange={onRememberMeChange} />
-                        <span> Remember</span>
+                        <span> Remember me</span>
              </div>
 
              {

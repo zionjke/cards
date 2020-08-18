@@ -1,7 +1,7 @@
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../store";
 import {Dispatch} from "redux";
-import {apiCards} from "../../dal/api";
+import {apiCards} from "../../api/api";
 import {action, CardsActionTypes} from "../actions/cards";
 import Cookies from "js-cookie";
 
@@ -75,7 +75,9 @@ type ThunkType = ThunkAction<void, AppStateType, unknown, CardsActionTypes>
 export const setRatingCards = (grade: number, id: string): ThunkType => async (dispatch: Dispatch<CardsActionTypes>) => {
     try {
         let token = Cookies.get('token')
-        let res = await apiCards.setGradeCard(token, grade, id)
+        let res = await apiCards.getCards(id, token)
+
+        // let res = await apiCards.setGradeCard(token, grade, id)
         Cookies.set('token', res.token)
         dispatch(action.setRating(res.updatedGrade))
     } catch (e) {
@@ -88,24 +90,30 @@ export const getCards = (id: string): ThunkType => async (dispatch: Dispatch<Car
         let token = Cookies.get('token')
         let res = await apiCards.getCards(id, token)
         Cookies.set('token', res.token)
+
         dispatch(action.setCards(res.cards))
+
+
     } catch (e) {
         console.log(e)
     }
 }
 
-export const addNewCards = (packId: string, question: string, answer: string): ThunkType => async (dispatch: Dispatch<CardsActionTypes>) => {
+export const addNewCards = (packId: string, question: string, answer: string) => async (dispatch: Dispatch<CardsActionTypes>) => {
     try {
+
         let token = Cookies.get('token')
         let res = await apiCards.addCards(packId, question, answer, token)
         Cookies.set('token', res.token)
         dispatch(action.addCards(res.newCard))
+
+
     } catch (e) {
         console.log(e)
     }
 }
 
-export const deleteCards = (id: string): ThunkType => async (dispatch: Dispatch<CardsActionTypes>) => {
+export const deleteCards = (id: string) => async (dispatch: Dispatch<CardsActionTypes>) => {
     try {
         let token = Cookies.get('token')
         let res = await apiCards.deleteCards(token, id)
