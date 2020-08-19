@@ -1,8 +1,11 @@
 .App {
-  display: flex;
-  flex-direction: column;
+
+}
+
+.wrapper {
   height: 100vh;
-  background: darkgrey;
+  background-color: #100e17;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .button {

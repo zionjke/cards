@@ -42,7 +42,7 @@ const NewItemForm: React.FC<Props> = ({addItem, cancelButton,toggleFormVisible})
                    onKeyPress={onKeyPress}
                    onChange={onTitleChanged}
                    placeholder='Enter pack name'/>
-            <Button color='green' onClick={onAddItemClick}>
+            <Button color='blue' onClick={onAddItemClick}>
                 Add new pack
             </Button>
             {cancelButton &&

@@ -3,6 +3,7 @@ import {useState} from 'react';
 import '../scss/addPack.scss'
 import NewItemForm from "./newItemForm";
 import Button from "./Button";
+import addSvg from '../assets/add.svg'
 
 type Props = {
     onAddPack: (name: string) => void
@@ -17,7 +18,7 @@ const AddPack: React.FC<Props> = ({onAddPack}) => {
     return (
         <div className='add-pack_form'>
             {!isVisibleForm ? <div onClick={toggleFormVisible} className='add-pack_form-new'>
-                    <Button color='blue'>Add new pack</Button>
+                    <img src={addSvg} alt="Add svg icon"/>
                 </div>
                 : <div className='add-pack_form-block'>
                     <NewItemForm addItem={onAddPack}

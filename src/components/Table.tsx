@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Pack from "./Pack";
+import Pack from "./PackOld";
 import {CardPack} from "../types/entities";
 import '../scss/packs.scss'
 import './../scss/pack.scss'

@@ -20,7 +20,7 @@ const App = () => {
   return (
     <div className="App">
         <Header/>
-        <div className='wrapper'>
+        <div className="wrapper">
             <Switch>
                 <Route exact path={'/profile'} render={() => <Profile/>}/>
                 <Route exact path={'/login'} render={() => <Login/>}/>

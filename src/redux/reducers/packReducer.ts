@@ -31,7 +31,7 @@ const packReducer = (state: InitialStateType = InitialState, action: PacksAction
         case "PACKS/REDUCER/ADD_PACK":
             return {
                 ...state,
-                cardPacks: [...state.cardPacks, action.pack]
+                cardPacks: [action.pack,...state.cardPacks]
             }
         case "PACKS/REDUCER/DELETE_PACK":
             return {

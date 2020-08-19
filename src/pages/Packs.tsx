@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useCallback, useEffect} from "react";
+import {useCallback, useEffect, Fragment} from "react";
 import {addPack, deletePack, getPacks, updatePack} from "../redux/reducers/packReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../redux/store";
@@ -8,8 +8,10 @@ import {action} from '../redux/actions/login';
 import {SearchFilter} from "../components/SearchFilter";
 import {actionPack} from "../redux/actions/packs";
 import Pagination from "react-js-pagination";
+import {Pack} from "../components/Pack";
+import '../scss/packs.scss'
+import '../scss/pagination.scss'
 
-import {Table} from "../components/Table";
 
 
 type Props = {};
@@ -47,15 +49,17 @@ const Packs = React.memo((props: Props) => {
     const filteredPacks = cardPacks.filter(pack => pack.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
 
     return (
-        <div>
-            <SearchFilter/>
-            <AddPack onAddPack={onAddPack}/>
-            <Table filteredPacks={filteredPacks} onUpdatePack={onUpdatePack} onDeletePack={onDeletePack}/>
-            <Pagination totalItemsCount={cardPackTotalCount}
-                        onChange={handlePageChange}
-                        activePage={currentPage}
-                        itemsCountPerPage={pageCount}/>
-        </div>
+            <div className='packs'>
+                <SearchFilter/>
+                <AddPack onAddPack={onAddPack}/>
+                <div className="packs__items">
+                    {filteredPacks.map(pack => <Pack onUpdatePack={onUpdatePack} onDeletePack={onDeletePack} {...pack}/>)}
+                </div>
+                <Pagination totalItemsCount={cardPackTotalCount}
+                            onChange={handlePageChange}
+                            activePage={currentPage}
+                            itemsCountPerPage={pageCount}/>
+            </div>
     );
 });
 
