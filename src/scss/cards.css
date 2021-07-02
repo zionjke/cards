@@ -1,0 +1,214 @@
+
+.main-cards {
+  -webkit-transform: perspective(900px);
+  -webkit-transform-style: preserve-3d;
+}
+.title{
+  width: 100%;
+  text-align: center;
+}
+.title h1{
+  font-size:50px;
+  font-family: 'Exo', sans-serif;
+}
+
+.cardsBlock {
+  display: flex;
+  width: 200px;
+  height: 80px;
+  left: 0;
+}
+
+.card {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px;
+  text-align:center;
+  border-radius: 5px;
+  right: 400px;
+  width: 250px;
+  height: 450px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: linear-gradient(rgb(93,94,170),rgb(93,66,103));
+  transition:.6s;
+ transform: rotatey(-55deg) rotatex(35deg) translatey(-200px) translatez(-240px);
+  box-shadow: 0px 20px 60px rgba(0,0,0, 0.5);
+}
+
+
+.card:nth-child(1) {
+  transform: rotatey(-55deg) rotatex(35deg) translatey(-200px) translatez(-250px);
+}
+.card:nth-child(2) {
+  transform: rotatey(-55deg) rotatex(35deg) translatey(-200px) translatez(-260px);
+}
+.card:nth-child(3) {
+  transform: rotatey(-55deg) rotatex(35deg) translatey(-200px) translatez(-270px);
+}
+.card:nth-child(4) {
+  transform: rotatey(-55deg) rotatex(35deg) translatey(-200px) translatez(-280px);
+}
+.card:nth-child(5) {
+  transform: rotatey(-55deg) rotatex(35deg) translatey(-200px) translatez(-290px);
+}
+.card:nth-child(6) {
+  transform: rotatey(-55deg) rotatex(35deg) translatey(-200px) translatez(-300px);
+}
+
+
+.cardActive{
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px;
+  text-align:center;
+  border-radius: 5px;
+  right: 650px;
+  width: 350px;
+  height: 550px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: linear-gradient(rgb(93,94,170),rgb(93,66,103));
+  transition:.6s;
+  transform: rotatex(0deg);
+  transform: rotatez(0deg);
+  box-shadow: 0px 20px 60px rgba(0,0,0, 0.5);
+}
+
+
+.card img{
+  transform: translateY(15px);
+  width:200px;
+  height:120px;
+}
+h3{
+  font-size:25px;
+  font-family: 'Abel', sans-serif;
+  color:rgb(255,255,255);
+  text-shadow: 0 0 2px rgb(255,255,255);
+  transform: translatey(10px);
+}
+
+p{
+  font-family: 'Abel', sans-serif;
+  color: white;
+  text-align:center;
+  width:220px;
+  transform: translatex(12px);
+}
+h6 {
+  color: #342c12
+}
+
+.headerCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.rateCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 170px;
+  height: 25px;
+}
+.visibleAnswer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 170px;
+  height: 25px;
+}
+
+.visibleIcon {
+  display: flex;
+  max-width: 30px;
+  max-height: 30px;
+}
+.footerCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 100px;
+}
+.footerCard img {
+  max-width: 30px;
+  max-height: 30px;
+}
+
+.knowledge {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 250px;
+  height: 100px;
+  font-size: small;
+}
+
+.knowledgeCard {
+  display: flex;
+  flex-direction: column;
+  margin-left: 100px;
+  max-width: 450px;
+  height: 460px;
+  border: 1px solid;
+}
+.knowledgeCard img{
+  max-width: 40px;
+  max-height: 40px;
+}
+.cardGoodBox {
+  display: flex;
+  border: 1px solid;
+  align-items: center;
+}
+
+.cardGood {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  width: 150px;
+  height: 200px;
+  background: linear-gradient(rgb(93,94,170),rgb(93,66,103));
+  transform: rotatey(0deg) rotatex(0deg) translatey(-0px) translatez(0px);
+  transition:.6s;
+  box-shadow: -2px -0px  rgba(0,0,0,0.6);
+}
+.cardGood:nth-child(1n+1) {
+  z-index: -1;
+  margin-right: -130px;
+  margin-bottom: +10px;
+}
+
+.cardBadBox {
+  display: flex;
+  border: 1px solid;
+}
+
+.cardBad {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  width: 150px;
+  height: 200px;
+  background: linear-gradient(rgb(93,94,170),rgb(93,66,103));
+  transition:.6s;
+  box-shadow: -2px -0px  rgba(0,0,0,0.6);
+}
+
+.cardBad:nth-child(1n+1) {
+  z-index: -1;
+  margin-right: -130px;
+}

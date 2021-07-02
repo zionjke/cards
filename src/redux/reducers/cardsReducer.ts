@@ -10,10 +10,14 @@ import {NewCardType} from "../../types/entities";
 
 type InitialStateType = {
     cards: Array<NewCardType>
+    goodKnowledge: Array<NewCardType>
+    badKnowledge: Array<NewCardType>
 }
 
 const InitialState = {
     cards: [],
+    goodKnowledge: [],
+    badKnowledge: [],
     newQuestionTitle: '',
     newAnswerTitle: ''
 };
@@ -31,7 +35,6 @@ const cardsReducer = (state: InitialStateType = InitialState, action: CardsActio
                 cards: state.cards.filter(f => f._id !== action.deletedCard._id)
             }
         case "CARDS/REDUCER/SET_VISIBLE":
-            debugger
             return {
                 ...state,
                 cards: state.cards.map(card => {
@@ -55,7 +58,7 @@ const cardsReducer = (state: InitialStateType = InitialState, action: CardsActio
             return {
                 ...state,
                 cards: state.cards.map(card => {
-                    if(card._id === action.obj.card_id) {
+                    if (card._id === action.obj.card_id) {
                         return {
                             ...card,
                             grade: action.obj.grade
@@ -64,6 +67,46 @@ const cardsReducer = (state: InitialStateType = InitialState, action: CardsActio
                         return card
                     }
                 })
+            }
+        case "CARDS/REDUCER/SET_KNOWLEDGE": {
+            let currentCard = state.cards.find((card) => {
+                return card._id === action.id
+            })
+            if (action.rate === 1) {
+                return {
+                    ...state,
+                    goodKnowledge: [...state.goodKnowledge, currentCard],
+                    cards: state.cards.filter((el) => {
+                            return el._id !== currentCard?._id
+                        }
+                    ),
+                }
+            } else {
+                return {
+                    ...state,
+                    badKnowledge: [...state.badKnowledge, currentCard],
+                    cards: state.cards.filter((el) => {
+                            return el._id !== currentCard?._id
+                        }
+                    ),
+                }
+            }
+
+        }
+        case "CARDS/REDUCER/SET_REPEAT" :
+            return {
+                ...state,
+                goodKnowledge: state.goodKnowledge.filter((card) => {
+                    return !action.cards.find((c) => {
+                        return c._id === card._id
+                    })
+                }),
+                badKnowledge: state.badKnowledge.filter((card) => {
+                    return !action.cards.find((c) => {
+                        return c._id === card._id
+                    })
+                }),
+                cards: [...state.cards, ...action.cards],
             }
         default:
             return state
@@ -115,7 +158,6 @@ export const deleteCards = (id: string): ThunkType => async (dispatch: Dispatch<
         console.log(e)
     }
 }
-
 
 
 export default cardsReducer

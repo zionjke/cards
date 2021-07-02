@@ -52,7 +52,6 @@ export const api = {
 
 export const apiRegistration = {
     postRegistration(email:string, password:string) {
-        debugger
         return  axios.post('https://cards-nya-back.herokuapp.com/1.0/auth/register',
             {email, password})
             .then(res => res.data)
@@ -74,6 +73,7 @@ export const apiCards = {
             .then(res => res.data)
     },
     setGradeCard(token: string | undefined, grade: number, id: string) {
+        debugger
         return axios.put('http://localhost:7542/1.0/cards/grade', {token, grade, card_id: id})
             .then(res => res.data)
     }
